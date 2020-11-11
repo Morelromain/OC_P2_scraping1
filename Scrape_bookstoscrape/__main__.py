@@ -32,27 +32,28 @@ if response.ok:
             #Request data from url book's categorie                                                                                          
             url_cat = 'http://books.toscrape.com/catalogue/'+url_categorie[:-11]+'/index.html' 
             response2 = requests.get(url_cat)                                                                    
-            print ("Scraping de",nom_categorie)
+            print ("Scraping de",nom_categorie," : page 1")
 
             if response2.ok:
                 soup2 = BeautifulSoup(response2.content, 'html.parser')
                 livre = soup2.findAll('article')                       
                     
                 for h3 in livre:
-                    url_cat2 = fs.find_book(h3)
-                    fs.scrape_page(url_cat2,information)
+                    url_book = fs.find_book(h3)
+                    fs.scrape_page(url_book,information)
                     
             i = 2
             while response2.ok:                                                                                      
                 url_cat = 'http://books.toscrape.com/catalogue/'+url_categorie[:-11]+'/page-'+str(i)+'.html' 
-                response2 = requests.get(url_cat)                                                                    
-                i += 1
-                                
+                response2 = requests.get(url_cat)                                                               
+                                                
                 if response2.ok:
+                    print ("Scraping de",nom_categorie," : page",i)
                     soup2 = BeautifulSoup(response2.content, 'html.parser')
                     livre = soup2.findAll('article')                       
                         
                     for h3 in livre:
-                        url_cat2 = fs.find_book(h3)
-                        fs.scrape_page(url_cat2,information)
+                        url_book = fs.find_book(h3)
+                        fs.scrape_page(url_book,information)
+                i += 1
                         

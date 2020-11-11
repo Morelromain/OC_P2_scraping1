@@ -7,7 +7,7 @@ Version Python:3.8.3
 
 - Ouvrir votre terminal
 
-- Aller dans le dossier OC_P2_scraping1 téléchargé:
+- Aller dans le dossier OC_P2_scraping1:
 cd OC_P2_scraping1
 
 ################### Environnement virtuel ###################
@@ -25,7 +25,7 @@ pip install -r requirements.txt
 ################### Programme de scraping ###################
 
 -Activer le programme de Scrapping:
-Python python Scrape_bookstoscrape
+python Scrape_bookstoscrape
 
 -Récupérer les données produites:
 Dossiers data_scrape et image_scrape 

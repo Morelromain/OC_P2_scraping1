@@ -29,8 +29,8 @@ def find_book(h3):
     return (url_cat2)
 
 #Request data from url book's page
-def scrape_page(url_cat2,information):
-    response = requests.get(url_cat2)
+def scrape_page(url_book,information):
+    response = requests.get(url_book)
     if response.ok: 
         response.encoding = "utf-8"
         soup = BeautifulSoup(response.content, 'html.parser')
@@ -38,15 +38,15 @@ def scrape_page(url_cat2,information):
         categorie = soup.findAll('a')
         description1 = soup.findAll('p')  
         description2 = description1[3].text.encode('utf-8').decode('utf-8').replace(';',',')
-        title = soup.find('h1').text.replace(':','').replace('/',',').replace('"','').replace('*','').replace('?','')
+        title = soup.find('h1').text
         image = soup.find('img')
         link = image['src']
         image_link = []
         image_link.append('http://books.toscrape.com'+link[5:]) 
 
-        information.write(url_cat2+';'+tds[0].text+';'+title+';'+tds[2].text+';'+tds[3].text+';'
+        information.write(url_book+';'+tds[0].text+';'+title+';'+tds[2].text+';'+tds[3].text+';'
         +tds[5].text+';'+description2+';'+categorie[3].text+';'+tds[6].text+';'+image_link[0]+';\n')
 
         img_data = requests.get(image_link[0]).content
-        with open('../image_scrape/'+title+'.jpg', 'wb') as download:
+        with open('../image_scrape/'+url_book[36:-11]+'.jpg', 'wb') as download:
             download.write(img_data)
