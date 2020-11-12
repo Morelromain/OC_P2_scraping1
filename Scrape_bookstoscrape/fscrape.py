@@ -1,5 +1,6 @@
 # -*-coding:Utf-8 -*
 import os
+import csv
 import requests                
 from bs4 import BeautifulSoup       
 
@@ -36,18 +37,18 @@ def scrape_page(url_book, information):
         tds = soup.findAll('td')
         categorie = soup.findAll('a')
         description1 = soup.findAll('p')  
-        description2 = description1[3].text.encode('utf-8')\
-        .decode('utf-8').replace(';', ',')
+        description2 = description1[3].text
         title = soup.find('h1').text
         image = soup.find('img')
         link = image['src']
         image_link = []
         image_link.append('http://books.toscrape.com' + link[5:]) 
-
-        information.write(url_book + ';' + tds[0].text + ';' + title 
-        + ';' + tds[2].text + ';' + tds[3].text + ';' + tds[5].text 
-        + ';' + description2 + ';' + categorie[3].text 
-        + ';' + tds[6].text + ';' + image_link[0] + ';\n')
+        
+        list_data = [url_book, tds[0].text, title,
+        tds[2].text, tds[3].text, tds[5].text, description2, 
+        categorie[3].text, tds[6].text, image_link[0]]
+        datawriter = csv.writer(information)
+        datawriter.writerow(list_data)
 
         img_data = requests.get(image_link[0]).content
         with open('../image_scrape/' + url_book[36:-11] 

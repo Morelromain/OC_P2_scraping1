@@ -1,5 +1,6 @@
 # -*-coding:Utf-8 -*
 
+import csv
 import requests
 from bs4 import BeautifulSoup
 
@@ -26,10 +27,13 @@ if response.ok:
 
         #create file.csv of all categorie
         with open('../data_scrape/' + nom_categorie + '.csv', 
-        'w', encoding='utf-8') as information:
-            information.write('product_page_url; universal_product_code(upc); \
-            title; price_including_tax; price_excluding_tax; number_available; \
-            product_description; category; review_rating; image_url;\n')
+        'w', encoding='utf-8', newline='') as information:
+            list_title = ["product_page_url", "universal_product_code", 
+            "title", "price_including_tax", "price_excluding_tax", 
+            "number_available", "product_description", "category", 
+            "review_rating", "image_url"]
+            datawriter = csv.writer(information)
+            datawriter.writerow(list_title)
             
             #Request data from url book's categorie                                                                                          
             url_cat = 'http://books.toscrape.com/catalogue/' \
