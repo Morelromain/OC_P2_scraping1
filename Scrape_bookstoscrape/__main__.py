@@ -16,23 +16,26 @@ if response.ok:
     soup = BeautifulSoup(response.content, 'html.parser')
     cat_column = soup.findAll('ul')
     cat_list = cat_column[2].findAll('a')
-    print ('Nombres de categorie : ',len(cat_list))
+    print ('Nombres de categorie : ', len(cat_list))
 
     #recuperate all categorie's name and address
-    nb=0
+    nb = 0
     while nb < len(cat_list):
-        nom_categorie,url_categorie = fs.list_cat(nb,cat_list)
+        nom_categorie, url_categorie = fs.list_cat(nb, cat_list)
         nb += 1
 
         #create file.csv of all categorie
-        with open('../data_scrape/'+nom_categorie+'.csv', 'w', encoding='utf-8') as information:
-            information.write('product_page_url; universal_product_code(upc); title; price_including_tax;\
-            price_excluding_tax; number_available; product_description; category; review_rating; image_url;\n')
+        with open('../data_scrape/' + nom_categorie + '.csv', 
+        'w', encoding='utf-8') as information:
+            information.write('product_page_url; universal_product_code(upc); \
+            title; price_including_tax; price_excluding_tax; number_available; \
+            product_description; category; review_rating; image_url;\n')
             
             #Request data from url book's categorie                                                                                          
-            url_cat = 'http://books.toscrape.com/catalogue/'+url_categorie[:-11]+'/index.html' 
+            url_cat = 'http://books.toscrape.com/catalogue/' \
+            + url_categorie[:-11] + '/index.html' 
             response2 = requests.get(url_cat)                                                                    
-            print ("Scraping de",nom_categorie," : page 1")
+            print ("Scraping de", nom_categorie, " : page 1")
 
             if response2.ok:
                 soup2 = BeautifulSoup(response2.content, 'html.parser')
@@ -41,22 +44,22 @@ if response.ok:
                 #Request data from url book's
                 for h3 in livre:
                     url_book = fs.find_book(h3)
-                    fs.scrape_page(url_book,information)
+                    fs.scrape_page(url_book, information)
             
             #Go to other categorie's page if exist
             i = 2
             while response2.ok:                                                                                      
-                url_cat = 'http://books.toscrape.com/catalogue/'+url_categorie[:-11]+'/page-'+str(i)+'.html' 
+                url_cat = 'http://books.toscrape.com/catalogue/' \
+                + url_categorie[:-11] + '/page-' + str(i) + '.html' 
                 response2 = requests.get(url_cat)                                                               
                                                 
                 if response2.ok:
-                    print ("Scraping de",nom_categorie," : page",i)
+                    print ("Scraping de", nom_categorie, " : page", i)
                     soup2 = BeautifulSoup(response2.content, 'html.parser')
                     livre = soup2.findAll('article')    
 
                     #Request data from url book's
                     for h3 in livre:
                         url_book = fs.find_book(h3)
-                        fs.scrape_page(url_book,information)
+                        fs.scrape_page(url_book, information)
                 i += 1
-                        
