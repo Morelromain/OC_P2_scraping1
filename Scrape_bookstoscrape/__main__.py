@@ -37,11 +37,13 @@ if response.ok:
             if response2.ok:
                 soup2 = BeautifulSoup(response2.content, 'html.parser')
                 livre = soup2.findAll('article')                       
-                    
+                
+                #Request data from url book's
                 for h3 in livre:
                     url_book = fs.find_book(h3)
                     fs.scrape_page(url_book,information)
-                    
+            
+            #Go to other categorie's page if exist
             i = 2
             while response2.ok:                                                                                      
                 url_cat = 'http://books.toscrape.com/catalogue/'+url_categorie[:-11]+'/page-'+str(i)+'.html' 
@@ -50,8 +52,9 @@ if response.ok:
                 if response2.ok:
                     print ("Scraping de",nom_categorie," : page",i)
                     soup2 = BeautifulSoup(response2.content, 'html.parser')
-                    livre = soup2.findAll('article')                       
-                        
+                    livre = soup2.findAll('article')    
+
+                    #Request data from url book's
                     for h3 in livre:
                         url_book = fs.find_book(h3)
                         fs.scrape_page(url_book,information)

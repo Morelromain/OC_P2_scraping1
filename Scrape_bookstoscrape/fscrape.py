@@ -19,7 +19,6 @@ def list_cat(nb,cat_list):
         list_url_categorie.append(link)
     return (list_nom_categorie,list_url_categorie[nb])
 
-
 #find book on url page
 def find_book(h3):
     a = h3.find('a')
