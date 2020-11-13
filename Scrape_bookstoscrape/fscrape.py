@@ -23,9 +23,9 @@ def list_cat(nb, cat_list):
 def find_book(h3):
     """find book on url page"""
     a = h3.find('a')
-    lien = a['href']
-    lien2 = lien[8:]
-    url_cat2 = "http://books.toscrape.com/catalogue" + lien2
+    link = a['href']
+    link2 = link[8:]
+    url_cat2 = "http://books.toscrape.com/catalogue" + link2
     return (url_cat2)
 
 def scrape_page(url_book, information):
