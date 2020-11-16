@@ -36,9 +36,8 @@ def scrape_page(url_book, information):
         soup = BeautifulSoup(response.content, 'html.parser')
         tds = soup.findAll('td')
         categorie = soup.findAll('a')
-        paragraphe = soup.findAll('p')  
-        description = paragraphe[3].text
-        review = paragraphe[2]
+        ptag = soup.findAll('p')  
+        review = ptag[2]
         review2 = review['class']
         title = soup.find('h1').text
         image = soup.find('img')
@@ -47,7 +46,7 @@ def scrape_page(url_book, information):
         image_link.append('http://books.toscrape.com' + link[5:]) 
         
         list_data = [url_book, tds[0].text, title,
-        tds[2].text, tds[3].text, tds[5].text, description, 
+        tds[2].text, tds[3].text, tds[5].text, ptag[3].text, 
         categorie[3].text, review2[1], image_link[0]]
         datawriter = csv.writer(information)
         datawriter.writerow(list_data)
