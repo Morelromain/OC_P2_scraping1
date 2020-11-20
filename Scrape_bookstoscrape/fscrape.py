@@ -1,8 +1,10 @@
-# -*-coding:Utf-8 -*
+"""fonctions of Scrape_booktoscrape"""
+
 import os
 import csv
+
 import requests                
-from bs4 import BeautifulSoup       
+from bs4 import BeautifulSoup as bs   
 
 def createdir():
     """create directory if they dont exist"""
@@ -32,8 +34,8 @@ def scrape_page(url_book, information):
     """Request data from url book's page"""
     response = requests.get(url_book)
     if response.ok: 
-        response.encoding = "utf-8"
-        soup = BeautifulSoup(response.content, 'html.parser')
+        
+        soup = bs(response.content, 'html.parser')
         tds = soup.findAll('td')
         categorie = soup.findAll('a')
         ptag = soup.findAll('p')  
@@ -47,7 +49,7 @@ def scrape_page(url_book, information):
         
         list_data = [url_book, tds[0].text, title,
         tds[2].text, tds[3].text, tds[5].text, ptag[3].text, 
-        categorie[3].text, review2[1], image_link[0]]
+        categorie[3].text, review2[1], url_book[36:-11], image_link[0]]
         datawriter = csv.writer(information)
         datawriter.writerow(list_data)
 
