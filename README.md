@@ -33,7 +33,7 @@ pip install -r requirements.txt
 
 -Activer le programme de Scrapping:
 ```bash
-python Scrape_bookstoscrape
+python -m Scrape_bookstoscrape
 ```
 
 -Récupérer les données produites dans le dossiers data_scrape et image_scrape 
